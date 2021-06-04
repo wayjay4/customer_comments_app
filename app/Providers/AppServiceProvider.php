@@ -13,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // use https when in production mode
+        if($this->app->environment('production')){
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 
     /**
