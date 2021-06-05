@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Customernote;
 
 class User extends Authenticatable
 {
@@ -17,6 +18,9 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    // set default name for table
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile_photo_url',
     ];
 
     /**
@@ -58,4 +63,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    // model relationship between Customer and Customernote (one-to-many)
+    public function customernotes()
+    {
+        return $this->hasMany(Customernote::class);
+    }
 }
