@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\Customer;
+use App\Models\Customernote;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +17,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+        User::factory(10)->create();
+        Customer::factory(200)->create();
+        CustomerNote::factory(500)->create();
     }
 }
