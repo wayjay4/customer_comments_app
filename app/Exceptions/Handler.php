@@ -63,6 +63,11 @@ class Handler extends ExceptionHandler
             return $this->errorResponse($exception->getMessage(), $exception->getStatusCode());
         }
 
+        // prevents hackers from knowing we are handling CRSF
+        if($exception instanceof TokenMismatchException){
+            return redirect()->back()->withInput($request->input());
+        }
+
         return $this->errorResponse('Unexpected Exception. Try later.', 500);
     }
 
