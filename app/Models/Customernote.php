@@ -25,6 +25,6 @@ class Customernote extends Model
     // model relationship between Customernote and User (one-to-one)
     public function users()
     {
-        return $this->->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
