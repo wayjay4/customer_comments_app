@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customernote\CustomernoteController;
 
@@ -15,6 +16,9 @@ use App\Http\Controllers\Customernote\CustomernoteController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// User
+Route::resource('users', UserController::class);
 
 // Customer
 Route::resource('customers', CustomerController::class);
