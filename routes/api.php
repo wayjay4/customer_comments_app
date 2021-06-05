@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserCustomernoteController;
+use App\Http\Controllers\User\UserCustomerCustomernoteController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customernote\CustomernoteController;
 
@@ -19,6 +21,8 @@ use App\Http\Controllers\Customernote\CustomernoteController;
 
 // User
 Route::resource('users', UserController::class);
+Route::resource('users.customernotes', UserCustomernoteController::class);
+Route::resource('users.customers.customernotes', UserCustomerCustomernoteController::class);
 
 // Customer
 Route::resource('customers', CustomerController::class);
