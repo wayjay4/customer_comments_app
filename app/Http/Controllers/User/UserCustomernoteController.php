@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Models\User;
 use App\Models\Customernote;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserCustomernoteController extends ApiController
 {
@@ -70,11 +71,23 @@ class UserCustomernoteController extends ApiController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Customer  $customernote
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, Customernote $customernote)
     {
-        //
+        // verify if user is author of customer note
+        $this->checkUser($user, $customernote);
+
+        // get updated notes
+        $customernote->fill($request->only([
+            'note',
+        ]));
+
+        // save to db
+        $customernote->save();
+
+        return $this->showOne($customernote);
     }
 
     /**
@@ -83,8 +96,20 @@ class UserCustomernoteController extends ApiController
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $user, Customernote $customernote)
     {
-        //
+        // verify if user is author of customer note
+        $this->checkUser($user, $customernote);
+
+        $customernote->delete();
+
+        return $this->showOne($customernote);
+    }
+
+    protected function checkUser(User $user, Customernote $customernote)
+    {
+        if($user->id != $customernote->user_id){
+            throw new HttpException(422, 'The specified user is not the actual author of the customer note.');
+        }
     }
 }
