@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controller\Customerlist\CustomerController;
-use App\Http\Controller\Customernote\CustomernoteController;
+use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customernote\CustomernoteController;
 
 /*
 |--------------------------------------------------------------------------
