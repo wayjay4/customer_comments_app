@@ -39,6 +39,13 @@ class UserCustomerCustomernoteController extends ApiController
      */
     public function store(Request $request, User $user, Customer $customer)
     {
+        // validate request fields
+        $rules = [
+            'note' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
         return DB::transaction(function () use ($request, $user, $customer){
             $customernote = Customernote::create([
                 'note' => $request->note,

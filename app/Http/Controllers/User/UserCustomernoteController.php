@@ -76,6 +76,13 @@ class UserCustomernoteController extends ApiController
      */
     public function update(Request $request, User $user, Customernote $customernote)
     {
+        // validate request fields
+        $rules = [
+            'note' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
         // verify if user is author of customer note
         $this->checkUser($user, $customernote);
 
