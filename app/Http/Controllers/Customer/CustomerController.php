@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+use App\Models\Customer;
 
-class CustomerController extends Controller
+
+class CustomerController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +16,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        // get all customers
+        $customers = Customer::all();
+
+        return $this->showAll($customers);
     }
 
     /**

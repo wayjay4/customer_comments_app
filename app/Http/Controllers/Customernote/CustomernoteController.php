@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customernote;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+use App\Models\Customernote;
 
-class CustomernoteController extends Controller
+class CustomernoteController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,10 @@ class CustomernoteController extends Controller
      */
     public function index()
     {
-        //
+        // get all customer notes
+        $customernotes = Customernote::all();
+
+        return $this->showAll($customernotes);
     }
 
     /**
