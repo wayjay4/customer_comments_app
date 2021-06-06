@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\CustomerboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,13 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+// route for customer board
+Route::any('customerboard', [CustomerboardController::class, 'customerboard'])
+    ->name('customerboard')
+    ->middleware(['auth:sanctum', 'verified']);
+
+// route to work with react requests
+Route::any('customerboard/{any}', [CustomerboardController::class, 'customerboard'])
+    ->where('any', '.*')
+    ->middleware(['auth:sanctum', 'verified']);
