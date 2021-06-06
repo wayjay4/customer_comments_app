@@ -1,15 +1,13 @@
 import React, { useState, useEffect, Component } from 'react';
 import ReactDOM from 'react-dom';
 import CustomerData from './CustomerData';
-
-const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-console.log(API_KEY);
+import './styles/customerboard.css';
 
 function Customerboard() {
     //state vars
+    const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
     const [customerlist, setCustomerlist] = useState({});
     const [recievedlist, setRecievedlist] = useState(false);
-
 
     // use effect
     useEffect(() => {
@@ -39,7 +37,6 @@ function Customerboard() {
             setRecievedlist(true);
         });
     };
-
 
     return (
         <div className="container">

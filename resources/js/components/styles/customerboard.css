@@ -1,0 +1,27 @@
+
+* {
+	box-sizing:  border-box;
+}
+
+:root {
+	--siteColor-darkgrey:  #2b2d3c;
+}
+
+html {
+	background-color: var(--siteColor-darkgrey, gray);
+	background: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;
+}
+
+body {
+	line-height: 1.5;
+	font-family: "Poppins", sans-serif;
+	min-height: 100vh;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.card {
+	margin-bottom: 20px;
+}
