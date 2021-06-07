@@ -56,7 +56,6 @@ function Customerboard() {
                                 {
                                     customerlist.map(
                                         (customer) => {
-                                            //console.log(customer);
                                             return (
                                                 <CustomerData key={customer.id} customer={customer} />
                                             );

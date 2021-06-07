@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomerNoteData from './CustomerNoteData';
 
 const CustomerData = ({customer}) => {
 	return (
@@ -16,6 +17,17 @@ const CustomerData = ({customer}) => {
 
 				<div className="card-body">
 					<a href="#" className="card-link">Comments</a>
+	                    <div>
+	                        {
+	                            customer.customernote.map(
+	                                (customernote) => {
+	                                    return (
+	                                        <CustomerNoteData key={customernote.note_id} customernote={customernote} />
+	                                    );
+	                                }
+	                            )
+	                        }
+	                    </div>
 				</div>
 			</div>
 		</div>
