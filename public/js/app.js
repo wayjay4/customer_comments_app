@@ -3885,44 +3885,61 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CustomerData = function CustomerData(_ref) {
-  var customer = _ref.customer;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-    className: "container",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-      className: "card",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "card-body",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
-          className: "card-title",
-          children: customer.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-          className: "card-text",
-          children: [customer.address, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), " ", customer.city, ", ", customer.state, " ", customer.zipcode]
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
-        className: "list-group list-group-flush",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          className: "list-group-item",
-          children: customer.phone
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          className: "list-group-item",
-          children: customer.email
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-        className: "card-body",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-          href: "#",
-          className: "card-link",
-          children: "Comments"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          children: customer.customernote.map(function (customernote) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_CustomerNoteData__WEBPACK_IMPORTED_MODULE_1__.default, {
-              customernote: customernote
-            }, customernote.note_id);
-          })
-        })]
+  var customer = _ref.customer,
+      dataid = _ref.dataid,
+      handleSubmitForm = _ref.handleSubmitForm;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    className: "card customerdata-container",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      className: "card-body",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h5", {
+        className: "card-title",
+        children: customer.name
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+        className: "card-text",
+        children: [customer.address, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), " ", customer.city, ", ", customer.state, " ", customer.zipcode]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+        children: [customer.phone, " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), " ", customer.email]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "btn btn-outline-info",
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": '#collapse-notes-' + customer.id,
+          "aria-expanded": "false",
+          "aria-controls": 'collapse-notes-' + customer.id,
+          children: "View Customer Notes"
+        })
       })]
-    })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "card-body",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "collapse",
+        id: 'collapse-notes-' + customer.id,
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+          className: "card card-body",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+              type: "button",
+              className: "btn btn-outline-primary edit-note-btn",
+              "data-toggle": "modal",
+              "data-target": "#exampleModal",
+              "data-customerid": customer.id,
+              children: "Add A Customer Note"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+            children: customer.customernote.map(function (customernote) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_CustomerNoteData__WEBPACK_IMPORTED_MODULE_1__.default, {
+                customernote: customernote,
+                customerID: customer.id,
+                dataid: dataid,
+                handleSubmitForm: handleSubmitForm
+              }, customernote.note_id);
+            })
+          })]
+        })
+      })
+    })]
   });
 };
 
@@ -3948,16 +3965,109 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var CustomerNoteData = function CustomerNoteData(_ref) {
-  var customernote = _ref.customernote;
+  var customernote = _ref.customernote,
+      customerID = _ref.customerID,
+      dataid = _ref.dataid,
+      handleSubmitForm = _ref.handleSubmitForm;
+  var isValid = customernote.creator_id == dataid;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     className: "card",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "card-body",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("ul", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("ul", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("li", {
-          children: ["Comment: ", customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), "Author: ", customernote.note_creator]
+          children: ["Comment: ", customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), "Author: ", customernote.note_creator, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            children: isValid ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+                type: "button",
+                className: "btn btn-outline-primary edit-note-btn",
+                children: "Edit"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+                type: "button",
+                className: "btn btn-outline-secondary edit-note-btn",
+                children: "Delete"
+              })]
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+              children: "\xA0"
+            })
+          })]
         }, customernote.note_id)
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            className: "btn btn-outline-primary edit-note-btn",
+            "data-toggle": "modal",
+            "data-target": "#exampleModal",
+            "data-whatever": "@mdo",
+            children: "Edit"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+            type: "button",
+            className: "btn btn-outline-secondary edit-note-btn",
+            "data-toggle": "modal",
+            "data-target": "#exampleModal",
+            "data-whatever": "@fat",
+            children: "Delete"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          className: "modal fade",
+          id: "exampleModal",
+          tabIndex: "-1",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            className: "modal-dialog",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+              className: "modal-content",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+                className: "modal-header",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h5", {
+                  className: "modal-title",
+                  id: "exampleModalLabel",
+                  children: "New customer note"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+                  type: "button",
+                  className: "close",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close",
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                    "aria-hidden": "true",
+                    children: "\xD7"
+                  })
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+                className: "modal-body",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("form", {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+                    className: "form-group",
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+                      htmlFor: "message-text",
+                      className: "col-form-label",
+                      children: "Note:"
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("textarea", {
+                      className: "form-control",
+                      id: "customer-note"
+                    })]
+                  })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+                className: "modal-footer",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+                  type: "button",
+                  className: "btn btn-secondary",
+                  "data-dismiss": "modal",
+                  children: "Close"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+                  type: "button",
+                  className: "btn btn-primary",
+                  onClick: handleSubmitForm,
+                  children: "Save"
+                })]
+              })]
+            })
+          })
+        })]
+      })]
     })
   });
 };
@@ -4003,21 +4113,27 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Customerboard() {
   //state vars
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.origin + '/api/'),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('ol4wvmDgAmn5X3sNBjhIJgDOTfUpbpdnS2Z18I5u'),
       _useState2 = _slicedToArray(_useState, 2),
-      apiUrl = _useState2[0],
-      setApiUrl = _useState2[1];
+      apiKey = _useState2[0],
+      setApiKey = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.origin + '/api/'),
       _useState4 = _slicedToArray(_useState3, 2),
-      customerlist = _useState4[0],
-      setCustomerlist = _useState4[1];
+      apiUrl = _useState4[0],
+      setApiUrl = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
       _useState6 = _slicedToArray(_useState5, 2),
-      recievedlist = _useState6[0],
-      setRecievedlist = _useState6[1]; // use effect
+      customerlist = _useState6[0],
+      setCustomerlist = _useState6[1];
 
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      recievedlist = _useState8[0],
+      setRecievedlist = _useState8[1];
+
+  var dataid = document.getElementById('customerboard').getAttribute('data-id'); // use effect
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!recievedlist) {
@@ -4046,6 +4162,62 @@ function Customerboard() {
     });
   };
 
+  var handleSubmitForm = function handleSubmitForm(el) {
+    var account = dataid;
+    var customerID = 1; //let formValues['note'] = $("#customer-note").val();
+
+    document.getElementById('customer-note').getAttribute('value');
+    return console.log($("#customer-note").getAttribute('innerHTML'));
+
+    if (validateFormFields()) {
+      var thisUrl = "";
+      var thisMethod = ""; // if no timesheet_id, then add a timesheet record
+      // else, edit an existing timesheet record
+
+      if (timesheetData.timesheet_id <= 0) {
+        thisUrl = apiUrl + "users/" + account + "/customers/" + customerID + "/customernotes";
+        thisMethod = "POST";
+      } else {
+        thisUrl = apiUrl + "accounts/" + account + "/timesheets/" + timesheetData.timesheet_id;
+        thisMethod = "PUT";
+      } // make connection
+
+
+      fetch(thisUrl, {
+        "method": thisMethod,
+        "headers": {
+          "Authorization": "Bearer " + apiKey,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Referer": location.origin
+        },
+        "body": JSON.stringify(formValues)
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        getTimesheets();
+        $('#addTimeModal').modal('hide');
+        setFormValues({});
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  };
+
+  var validateFormFields = function validateFormFields() {
+    if (formValues["note"].length < 1) {
+      displayErrorMessage("note");
+      return false;
+    }
+
+    return true;
+  };
+
+  var displayErrorMessage = function displayErrorMessage(msg) {
+    var theMessage = "Please provide a valid '" + msg + "' value.";
+    alert(theMessage);
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: "container",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -4053,7 +4225,7 @@ function Customerboard() {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
         className: "col-md-12",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "card",
+          className: "card customerboard-container",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "card-header",
             children: "Customerboard Component"
@@ -4062,7 +4234,9 @@ function Customerboard() {
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             children: customerlist.map(function (customer) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_CustomerData__WEBPACK_IMPORTED_MODULE_2__.default, {
-                customer: customer
+                customer: customer,
+                dataid: dataid,
+                handleSubmitForm: handleSubmitForm
               }, customer.id);
             })
           })]
@@ -8538,7 +8712,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n.card {\r\n\tmargin-bottom: 20px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n.card {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.customerboard-container {\r\n\tborder:  none;\r\n}\r\n\r\n.add-note-btn, .edit-note-btn {\r\n\tposition: static;\r\n\tfloat: right;\r\n\tmargin-bottom: 25px;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

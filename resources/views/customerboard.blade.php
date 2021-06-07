@@ -20,7 +20,6 @@
 
     </head>
     <body class="antialiased container">
-        <div id="customerboard"></div>
-        <button type="button" class="btn btn-primary">Primary</button>
+        <div id="customerboard" data-id={{ Auth::user()->id }}></div>
     </body>
 </html>

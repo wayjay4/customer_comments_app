@@ -22,7 +22,7 @@ class CustomerController extends ApiController
         $customers = DB::table('customers')
             ->leftJoin('customernotes', 'customers.id', '=', 'customernotes.customer_id')
             ->leftJoin('users', 'users.id', '=', 'customernotes.user_id')
-            ->select('customers.*', 'customernotes.id as note_id', 'customernotes.note', 'users.name as note_creator', 'customernotes.updated_at as note_updated_on', 'customernotes.created_at as note_created_at')
+            ->select('customers.*', 'customernotes.id as note_id', 'customernotes.note', 'users.id as creator_id', 'users.name as note_creator', 'customernotes.updated_at as note_updated_on', 'customernotes.created_at as note_created_at')
             ->orderBy('customers.id', 'asc')
             ->orderBy('customernotes.updated_at', 'desc')
             ->get();
@@ -46,6 +46,7 @@ class CustomerController extends ApiController
                         [
                             'note_id' => $customer->note_id,
                             'note' => $customer->note,
+                            'creator_id' => $customer->creator_id,
                             'note_creator' => $customer->note_creator,
                             'note_updated_on' => $customer->note_updated_on,
                             'note_created_at' => $customer->note_created_at,
@@ -57,6 +58,7 @@ class CustomerController extends ApiController
                 $customernote = [
                             'note_id' => $customer->note_id,
                             'note' => $customer->note,
+                            'creator_id' => $customer->creator_id,
                             'note_creator' => $customer->note_creator,
                             'note_updated_on' => $customer->note_updated_on,
                             'note_created_at' => $customer->note_created_at,

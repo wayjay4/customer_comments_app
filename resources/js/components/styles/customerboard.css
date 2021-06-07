@@ -25,3 +25,13 @@ body {
 .card {
 	margin-bottom: 20px;
 }
+
+.customerboard-container {
+	border:  none;
+}
+
+.add-note-btn, .edit-note-btn {
+	position: static;
+	float: right;
+	margin-bottom: 25px;
+}
