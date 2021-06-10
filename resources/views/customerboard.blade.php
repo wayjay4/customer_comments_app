@@ -20,6 +20,6 @@
 
     </head>
     <body class="antialiased container">
-        <div id="customerboard" data-id={{ Auth::user()->id }}></div>
+        <div id="customerboard" data_id={{ Auth::user()->id }}></div>
     </body>
 </html>

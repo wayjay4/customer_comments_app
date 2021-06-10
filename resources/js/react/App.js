@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import CustomerBoard from "./CustomerBoard"; 
+import CustomerBoard from "./components/CustomerBoard"; 
 import "./styles/customerboard.css";
 
 function App(){

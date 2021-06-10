@@ -1,22 +1,35 @@
 import React, { useState, useEffect, Component } from 'react';
 import ReactDOM from 'react-dom';
 import CustomerData from './CustomerData';
-import './styles/customerboard.css';
 
-function Customerboard() {
+function CustomerBoard() {
     //state vars
+    const [appState, setAppState] = useState({});
     const [apiKey, setApiKey] = useState('ol4wvmDgAmn5X3sNBjhIJgDOTfUpbpdnS2Z18I5u');
     const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
     const [customerlist, setCustomerlist] = useState({});
     const [recievedlist, setRecievedlist] = useState(false);
-    const dataid = document.getElementById('customerboard').getAttribute('data-id');
+    const [noteContents, setNoteContents] = useState('');
 
     // use effect
     useEffect(() => {
-        if(!recievedlist){
+        window.onload = function() {
+            appState.dataid = document.getElementById('customerboard').getAttribute('data_id');
+            appState.getCustomerlist = getCustomerlist;
+            appState.onNoteChange = onNoteChange;
+            appState.handleSubmitForm = handleSubmitForm;
+            appState.validateFormFields = validateFormFields;
+            appState.displayErrorMessage = displayErrorMessage;
+            appState.customerlist = customerlist;
+            appState.noteContents = noteContents;
+            appState.setNoteContents = setNoteContents;
+            appState.handleModalBtnClick = handleModalBtnClick;
+
+            setAppState(appState);
+
             getCustomerlist();
         }
-    });
+    }, []);
 
     const getCustomerlist = () => {
         // create api connection and send request
@@ -33,6 +46,7 @@ function Customerboard() {
         .then(response => {
             setCustomerlist(response);
             setRecievedlist(true);
+            console.log(response);
         })
         .catch(err => {
             console.log(err);
@@ -40,8 +54,15 @@ function Customerboard() {
         });
     };
 
+    const onNoteChange = (el) => {
+        let targetVal = el.target.value;
+        setNoteContents(targetVal);
+        console.log('targetVal: ');
+        console.log(noteContents);
+    };
+
     const handleSubmitForm = (el) => {
-        let account = dataid;
+        let account = appState.dataid;
         let customerID = 1;
 
         //let formValues['note'] = $("#customer-note").val();
@@ -103,13 +124,17 @@ function Customerboard() {
         alert(theMessage);
     };
 
+    const handleModalBtnClick = (el) => {
+        console.log('ModalForm btn-click, target element: ');
+        console.log(el);
+    };
+
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <div className="card customerboard-container">
                         <div className="card-header">Customerboard Component</div>
-
                         {
                             !recievedlist
                             ?
@@ -122,7 +147,7 @@ function Customerboard() {
                                     customerlist.map(
                                         (customer) => {
                                             return (
-                                                <CustomerData key={customer.id} customer={customer} dataid={dataid} handleSubmitForm={handleSubmitForm} />
+                                                <CustomerData key={customer.id} appState={appState} customer={customer} noteContents={noteContents} />
                                             );
                                         }
                                     )
@@ -136,8 +161,8 @@ function Customerboard() {
     );
 }
 
-export default Customerboard;
+export default CustomerBoard;
 
 if (document.getElementById('customerboard')) {
-    ReactDOM.render(<Customerboard />, document.getElementById('customerboard'));
+    ReactDOM.render(<CustomerBoard />, document.getElementById('customerboard'));
 }
