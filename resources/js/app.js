@@ -19,4 +19,4 @@ require('./bootstrap');
  */
 
 //require('./components/Example');
-require('./components/Customerboard');
+require('./components/App');
