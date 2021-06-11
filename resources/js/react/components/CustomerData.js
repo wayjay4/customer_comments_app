@@ -2,60 +2,65 @@ import React, { useState, useEffect } from 'react';
 import CustomerNoteData from './CustomerNoteData';
 import ModalForm from './ModalForm';
 import ModalFormBtn from './ModalFormBtn';
+import AddNoteForm from './AddNoteForm';
 
-const CustomerData = ({appState, customer, noteContents}) => {
+const CustomerData = (props) => {
+	const [formData, setFormData] = useState({});
+
+	const handleInputChange = (el) => {
+		formData[el.target.name] = el.target.value;
+		setFormData(formData);
+	};
+
+	const handleSubmitForm = (el) => {
+		console.log('formData:');
+		console.log(formData);
+		console.log(props.customer);
+	};
+
 	const [modalData, setModalData] = useState({
-        'modal_id': 'modalForm',
+        'modal_id': 'modalForm'+props.customer.id,
         'modalLabel': 'customerNoteModal',
         'btn_text': 'Add A Customer Note',
-        'modal_title': 'Customer Comment:',
-        'modal_body': (<form>
-	                        <div className="form-group">
-	                            <label htmlFor="recipient-name" className="col-form-label">Customer Name:</label>
-	                            <input type="text" className="form-control" id="recipient-name" />
-	                        </div>
-	                        <div className="form-group">
-	                            <label htmlFor="message-text" className="col-form-label">Note:</label>
-	                            <textarea className="form-control" id="message-text"></textarea>
-	                        </div>
-	                    </form>),
+        'modal_title': 'Add a customer note on '+props.customer.name+':',
+        'modal_body': <AddNoteForm appState={props.appState} customer={props.customer} handleInputChange={handleInputChange} />,
 	});
 
 	return (
 		<div className="card customerdata-container">
 			<div className="card-body">
-				<h5 className="card-title">{customer.name}</h5>
+				<h5 className="card-title">{props.customer.name}</h5>
 				<p className="card-text">
-					{customer.address}
+					{props.customer.address}
 					<br /> 
-					{customer.city}, {customer.state} {customer.zipcode}
+					{props.customer.city}, {props.customer.state} {props.customer.zipcode}
 				</p>
 				<p>
-					{customer.phone}
+					{props.customer.phone}
 					<br />
-					{customer.email}
+					{props.customer.email}
 				</p>
 				<p>
-					<button className="btn btn-outline-info" type="button" data-toggle="collapse" data-target={'#collapse-notes-'+customer.id} aria-expanded="false" aria-controls={'collapse-notes-'+customer.id}>
+					<button className="btn btn-outline-info" type="button" data-toggle="collapse" data-target={'#collapse-notes-'+props.customer.id} aria-expanded="false" aria-controls={'collapse-notes-'+props.customer.id}>
 						View Customer Notes
 					</button>
 				</p>
 			</div>
 
 			<div className="card-body">
-				<div className="collapse" id={'collapse-notes-'+customer.id}>
+				<div className="collapse" id={'collapse-notes-'+props.customer.id}>
 					<div className="card card-body">
 						<div className="modal-container">
-							<ModalFormBtn className="add-note-btn" appState={appState} modalData={modalData} />
-	                    	<ModalForm appState={appState} modalData={modalData} />
+							<ModalFormBtn className="add-note-btn" appState={props.appState} modalData={modalData} />
+	                    	<ModalForm appState={props.appState} modalData={modalData} handleSubmitForm={handleSubmitForm} />
 						</div>
 
 	                    <div className="customernote-container">
 	                        {
-	                            customer.customernote.map(
+	                            props.customer.customernote.map(
 	                                (customernote) => {
 	                                    return (
-	                                        <CustomerNoteData key={customernote.note_id} appState={appState} customernote={customernote} customerID={customer.id} noteContents={noteContents} />
+	                                        <CustomerNoteData key={customernote.note_id} appState={props.appState} customernote={customernote} customerID={props.customer.id} />
 	                                    );
 	                                }
 	                            )

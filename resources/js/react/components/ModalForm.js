@@ -18,7 +18,7 @@ const ModalForm = (props) => {
 						</div>
 						<div className="modal-footer">
 							<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" className="btn btn-primary" onClick={props.appState.handleSubmitForm}>Save Note</button>
+							<button type="button" className="btn btn-primary" onClick={props.handleSubmitForm}>Save Note</button>
 						</div>
 					</div>
 				</div>
