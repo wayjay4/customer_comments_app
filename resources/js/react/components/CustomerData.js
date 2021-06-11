@@ -5,6 +5,8 @@ import ModalFormBtn from './ModalFormBtn';
 import AddNoteForm from './AddNoteForm';
 
 const CustomerData = (props) => {
+	const [apiKey, setApiKey] = useState('ol4wvmDgAmn5X3sNBjhIJgDOTfUpbpdnS2Z18I5u');
+	const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
 	const [formData, setFormData] = useState({});
 
 	const handleInputChange = (el) => {
@@ -13,9 +15,29 @@ const CustomerData = (props) => {
 	};
 
 	const handleSubmitForm = (el) => {
-		console.log('formData:');
-		console.log(formData);
-		console.log(props.customer);
+		let userID = props.appState.dataid;
+		let customerID = props.customer.id;
+		let thisUrl = apiUrl+"users/"+userID+"/customers/"+customerID+"/customernotes";
+		let thisMethod = "POST";
+
+		// make connection
+		fetch(thisUrl, {
+			"method": thisMethod,
+			"headers": {
+				"Authorization": "Bearer "+apiKey,
+				"Content-Type": "application/json",
+				"Accept": "application/json",
+				"Referer": location.origin,
+			},
+			"body": JSON.stringify(formData),
+		})
+		.then(response => response.json())
+		.then(response => {
+			console.log(response);
+		})
+		.catch(err => {
+			console.log(err);
+		});
 	};
 
 	const [modalData, setModalData] = useState({
@@ -32,7 +54,7 @@ const CustomerData = (props) => {
 				<h5 className="card-title">{props.customer.name}</h5>
 				<p className="card-text">
 					{props.customer.address}
-					<br /> 
+					<br />
 					{props.customer.city}, {props.customer.state} {props.customer.zipcode}
 				</p>
 				<p>

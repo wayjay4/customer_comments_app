@@ -41,14 +41,14 @@ class UserCustomerCustomernoteController extends ApiController
     {
         // validate request fields
         $rules = [
-            'note' => 'required',
+            'customer_note' => 'required',
         ];
 
         $this->validate($request, $rules);
 
         return DB::transaction(function () use ($request, $user, $customer){
             $customernote = Customernote::create([
-                'note' => $request->note,
+                'note' => $request->customer_note,
                 'customer_id' => $customer->id,
                 'user_id' => $user->id,
             ]);

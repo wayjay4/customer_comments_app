@@ -10,10 +10,10 @@ const CustomerNoteData = ({appState, customernote, customerID}) => {
 					<li key={customernote.note_id}>
 						Comment: {customernote.note}
 						<br />
-						Author: {customernote.note_creator}
+						Author: {customernote.creator_name}
 
 						<div>
-							
+
 							{
 								isValid
 								?

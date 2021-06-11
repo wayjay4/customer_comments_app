@@ -4284,10 +4284,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var CustomerData = function CustomerData(props) {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('ol4wvmDgAmn5X3sNBjhIJgDOTfUpbpdnS2Z18I5u'),
       _useState2 = _slicedToArray(_useState, 2),
-      formData = _useState2[0],
-      setFormData = _useState2[1];
+      apiKey = _useState2[0],
+      setApiKey = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.origin + '/api/'),
+      _useState4 = _slicedToArray(_useState3, 2),
+      apiUrl = _useState4[0],
+      setApiUrl = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+      _useState6 = _slicedToArray(_useState5, 2),
+      formData = _useState6[0],
+      setFormData = _useState6[1];
 
   var handleInputChange = function handleInputChange(el) {
     formData[el.target.name] = el.target.value;
@@ -4295,12 +4305,30 @@ var CustomerData = function CustomerData(props) {
   };
 
   var handleSubmitForm = function handleSubmitForm(el) {
-    console.log('formData:');
-    console.log(formData);
-    console.log(props.customer);
+    var userID = props.appState.dataid;
+    var customerID = props.customer.id;
+    var thisUrl = apiUrl + "users/" + userID + "/customers/" + customerID + "/customernotes";
+    var thisMethod = "POST"; // make connection
+
+    fetch(thisUrl, {
+      "method": thisMethod,
+      "headers": {
+        "Authorization": "Bearer " + apiKey,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Referer": location.origin
+      },
+      "body": JSON.stringify(formData)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
+      console.log(response);
+    })["catch"](function (err) {
+      console.log(err);
+    });
   };
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     'modal_id': 'modalForm' + props.customer.id,
     'modalLabel': 'customerNoteModal',
     'btn_text': 'Add A Customer Note',
@@ -4311,9 +4339,9 @@ var CustomerData = function CustomerData(props) {
       handleInputChange: handleInputChange
     })
   }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      modalData = _useState4[0],
-      setModalData = _useState4[1];
+      _useState8 = _slicedToArray(_useState7, 2),
+      modalData = _useState8[0],
+      setModalData = _useState8[1];
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "card customerdata-container",
@@ -4404,7 +4432,7 @@ var CustomerNoteData = function CustomerNoteData(_ref) {
       className: "card-body",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("ul", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("li", {
-          children: ["Comment: ", customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), "Author: ", customernote.note_creator, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+          children: ["Comment: ", customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), "Author: ", customernote.creator_name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
             children: isValid ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
                 type: "button",
@@ -8993,7 +9021,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n.card {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.customerboard-container {\r\n\tborder:  none;\r\n}\r\n\r\n.add-note-btn, .edit-note-btn {\r\n\tposition: static;\r\n\tfloat: right;\r\n\tmargin-bottom: 25px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n* {\n\tbox-sizing:  border-box;\n}\n\n:root {\n\t--siteColor-darkgrey:  #2b2d3c;\n}\n\nhtml {\n\tbackground-color: var(--siteColor-darkgrey, gray);\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\n}\n\nbody {\n\tline-height: 1.5;\n\tfont-family: \"Poppins\", sans-serif;\n\tmin-height: 100vh;\n\tbackground-size: cover;\n}\n\n.card {\n\tmargin-bottom: 20px;\n}\n\n.customerboard-container {\n\tborder:  none;\n}\n\n.add-note-btn, .edit-note-btn {\n\tposition: static;\n\tfloat: right;\n\tmargin-bottom: 25px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
