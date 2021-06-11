@@ -14,9 +14,7 @@ const CustomerNoteData = (props) => {
 	};
 
 	const handleSubmitForm = (el) => {
-		let userID = props.appState.dataid;
-		let customerID = props.customer.id;
-		let thisUrl = props.appState.apiUrl+"users/"+userID+"/customernotes/"+props.customernote.note_id;
+		let thisUrl = props.appState.apiUrl+"users/"+props.appState.dataid+"/customernotes/"+props.customernote.note_id;
 		let thisMethod = "PUT";
 
 		// make connection
@@ -39,10 +37,40 @@ const CustomerNoteData = (props) => {
 		});
 	};
 
+	const handleDeleteForm = (el) => {
+		// confirm deletion with user
+		let confirmDelete = confirm('Are you sure you want to delete the customer note?');
+
+		if(confirmDelete){
+			let thisUrl = props.appState.apiUrl+"users/"+props.appState.dataid+"/customernotes/"+props.customernote.note_id;
+			let thisMethod = "DELETE";
+
+			// make connection
+			fetch(thisUrl, {
+				"method": thisMethod,
+				"headers": {
+					"Authorization": "Bearer "+props.appState.apiKey,
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Referer": location.origin,
+				},
+			})
+			.then(response => response.json())
+			.then(response => {
+				console.log(response);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		}
+
+		return confirmDelete;
+	};
+
 	const [modalData, setModalData] = useState({
         'modal_id': 'modalEditForm'+props.customer.id,
         'modalLabel': 'customerNoteModal',
-        'btn_text': 'Edit A Customer Note',
+        'btn_text': 'Edit',
         'modal_title': 'Edit a customer note on '+props.customer.name+':',
         'modal_body': <EditNoteForm appState={props.appState} customer={props.customer} customernote={props.customernote} handleInputChange={handleInputChange} />,
 	});
@@ -62,10 +90,9 @@ const CustomerNoteData = (props) => {
 								isValidUser
 								?
 								<div>
-									<button type="button" className="btn btn-outline-primary edit-note-btn">Edit</button>
-									<button type="button" className="btn btn-outline-secondary edit-note-btn">Delete</button>
-
 									<div className="modal-container">
+										
+										<button type="button" className="btn btn-outline-danger edit-note-btn" onClick={handleDeleteForm}>Delete</button>
 										<ModalFormBtn className="add-note-btn" appState={props.appState} modalData={modalData} />
 				                    	<ModalForm appState={props.appState} modalData={modalData} handleSubmitForm={handleSubmitForm} />
 									</div>

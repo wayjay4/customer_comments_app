@@ -4443,9 +4443,7 @@ var CustomerNoteData = function CustomerNoteData(props) {
   };
 
   var handleSubmitForm = function handleSubmitForm(el) {
-    var userID = props.appState.dataid;
-    var customerID = props.customer.id;
-    var thisUrl = props.appState.apiUrl + "users/" + userID + "/customernotes/" + props.customernote.note_id;
+    var thisUrl = props.appState.apiUrl + "users/" + props.appState.dataid + "/customernotes/" + props.customernote.note_id;
     var thisMethod = "PUT"; // make connection
 
     fetch(thisUrl, {
@@ -4466,10 +4464,38 @@ var CustomerNoteData = function CustomerNoteData(props) {
     });
   };
 
+  var handleDeleteForm = function handleDeleteForm(el) {
+    // confirm deletion with user
+    var confirmDelete = confirm('Are you sure you want to delete the customer note?');
+
+    if (confirmDelete) {
+      var thisUrl = props.appState.apiUrl + "users/" + props.appState.dataid + "/customernotes/" + props.customernote.note_id;
+      var thisMethod = "DELETE"; // make connection
+
+      fetch(thisUrl, {
+        "method": thisMethod,
+        "headers": {
+          "Authorization": "Bearer " + props.appState.apiKey,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Referer": location.origin
+        }
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+
+    return confirmDelete;
+  };
+
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     'modal_id': 'modalEditForm' + props.customer.id,
     'modalLabel': 'customerNoteModal',
-    'btn_text': 'Edit A Customer Note',
+    'btn_text': 'Edit',
     'modal_title': 'Edit a customer note on ' + props.customer.name + ':',
     'modal_body': /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_EditNoteForm__WEBPACK_IMPORTED_MODULE_3__.default, {
       appState: props.appState,
@@ -4489,18 +4515,15 @@ var CustomerNoteData = function CustomerNoteData(props) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
           children: ["Comment: ", props.customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Author: ", props.customernote.creator_name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            children: isValidUser ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                type: "button",
-                className: "btn btn-outline-primary edit-note-btn",
-                children: "Edit"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-                type: "button",
-                className: "btn btn-outline-secondary edit-note-btn",
-                children: "Delete"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            children: isValidUser ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "modal-container",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalFormBtn__WEBPACK_IMPORTED_MODULE_2__.default, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+                  type: "button",
+                  className: "btn btn-outline-danger edit-note-btn",
+                  onClick: handleDeleteForm,
+                  children: "Delete"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalFormBtn__WEBPACK_IMPORTED_MODULE_2__.default, {
                   className: "add-note-btn",
                   appState: props.appState,
                   modalData: modalData
@@ -4509,7 +4532,7 @@ var CustomerNoteData = function CustomerNoteData(props) {
                   modalData: modalData,
                   handleSubmitForm: handleSubmitForm
                 })]
-              })]
+              })
             }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               children: "\xA0"
             })
