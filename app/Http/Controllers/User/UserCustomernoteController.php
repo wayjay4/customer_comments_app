@@ -78,7 +78,7 @@ class UserCustomernoteController extends ApiController
     {
         // validate request fields
         $rules = [
-            'note' => 'required',
+            'customer_note' => 'required',
         ];
 
         $this->validate($request, $rules);
@@ -87,9 +87,7 @@ class UserCustomernoteController extends ApiController
         $this->checkUser($user, $customernote);
 
         // get updated notes
-        $customernote->fill($request->only([
-            'note',
-        ]));
+        $customernote->note = $request->customer_note;
 
         // save to db
         $customernote->save();

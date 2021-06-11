@@ -4116,7 +4116,7 @@ function CustomerBoard() {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     window.onload = function () {
-      appState.dataid = document.getElementById('customerboard').getAttribute('data_id');
+      appState.apiKey = apiKey, appState.apiUrl = apiUrl, appState.dataid = document.getElementById('customerboard').getAttribute('data_id');
       appState.getCustomerlist = getCustomerlist;
       appState.handleSubmitForm = handleSubmitForm;
       appState.validateFormFields = validateFormFields;
@@ -4284,20 +4284,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var CustomerData = function CustomerData(props) {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('ol4wvmDgAmn5X3sNBjhIJgDOTfUpbpdnS2Z18I5u'),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
       _useState2 = _slicedToArray(_useState, 2),
-      apiKey = _useState2[0],
-      setApiKey = _useState2[1];
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(location.origin + '/api/'),
-      _useState4 = _slicedToArray(_useState3, 2),
-      apiUrl = _useState4[0],
-      setApiUrl = _useState4[1];
-
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-      _useState6 = _slicedToArray(_useState5, 2),
-      formData = _useState6[0],
-      setFormData = _useState6[1];
+      formData = _useState2[0],
+      setFormData = _useState2[1];
 
   var handleInputChange = function handleInputChange(el) {
     formData[el.target.name] = el.target.value;
@@ -4307,13 +4297,13 @@ var CustomerData = function CustomerData(props) {
   var handleSubmitForm = function handleSubmitForm(el) {
     var userID = props.appState.dataid;
     var customerID = props.customer.id;
-    var thisUrl = apiUrl + "users/" + userID + "/customers/" + customerID + "/customernotes";
+    var thisUrl = props.appState.apiUrl + "users/" + userID + "/customers/" + customerID + "/customernotes";
     var thisMethod = "POST"; // make connection
 
     fetch(thisUrl, {
       "method": thisMethod,
       "headers": {
-        "Authorization": "Bearer " + apiKey,
+        "Authorization": "Bearer " + props.appState.apiKey,
         "Content-Type": "application/json",
         "Accept": "application/json",
         "Referer": location.origin
@@ -4328,8 +4318,8 @@ var CustomerData = function CustomerData(props) {
     });
   };
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    'modal_id': 'modalForm' + props.customer.id,
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    'modal_id': 'modalAddForm' + props.customer.id,
     'modalLabel': 'customerNoteModal',
     'btn_text': 'Add A Customer Note',
     'modal_title': 'Add a customer note on ' + props.customer.name + ':',
@@ -4339,9 +4329,9 @@ var CustomerData = function CustomerData(props) {
       handleInputChange: handleInputChange
     })
   }),
-      _useState8 = _slicedToArray(_useState7, 2),
-      modalData = _useState8[0],
-      setModalData = _useState8[1];
+      _useState4 = _slicedToArray(_useState3, 2),
+      modalData = _useState4[0],
+      setModalData = _useState4[1];
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "card customerdata-container",
@@ -4390,7 +4380,7 @@ var CustomerData = function CustomerData(props) {
               return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_CustomerNoteData__WEBPACK_IMPORTED_MODULE_1__.default, {
                 appState: props.appState,
                 customernote: customernote,
-                customerID: props.customer.id
+                customer: props.customer
               }, customernote.note_id);
             })
           })]
@@ -4416,44 +4406,163 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _ModalForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalForm */ "./resources/js/react/components/ModalForm.js");
+/* harmony import */ var _ModalFormBtn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ModalFormBtn */ "./resources/js/react/components/ModalFormBtn.js");
+/* harmony import */ var _EditNoteForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditNoteForm */ "./resources/js/react/components/EditNoteForm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
 
-var CustomerNoteData = function CustomerNoteData(_ref) {
-  var appState = _ref.appState,
-      customernote = _ref.customernote,
-      customerID = _ref.customerID;
-  var isValid = customernote.creator_id == appState.dataid;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+
+
+
+
+var CustomerNoteData = function CustomerNoteData(props) {
+  var isValidUser = props.customernote.creator_id == props.appState.dataid;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+      _useState2 = _slicedToArray(_useState, 2),
+      formData = _useState2[0],
+      setFormData = _useState2[1];
+
+  var handleInputChange = function handleInputChange(el) {
+    formData[el.target.name] = el.target.value;
+    setFormData(formData);
+  };
+
+  var handleSubmitForm = function handleSubmitForm(el) {
+    var userID = props.appState.dataid;
+    var customerID = props.customer.id;
+    var thisUrl = props.appState.apiUrl + "users/" + userID + "/customernotes/" + props.customernote.note_id;
+    var thisMethod = "PUT"; // make connection
+
+    fetch(thisUrl, {
+      "method": thisMethod,
+      "headers": {
+        "Authorization": "Bearer " + props.appState.apiKey,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Referer": location.origin
+      },
+      "body": JSON.stringify(formData)
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
+      console.log(response);
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  };
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    'modal_id': 'modalEditForm' + props.customer.id,
+    'modalLabel': 'customerNoteModal',
+    'btn_text': 'Edit A Customer Note',
+    'modal_title': 'Edit a customer note on ' + props.customer.name + ':',
+    'modal_body': /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_EditNoteForm__WEBPACK_IMPORTED_MODULE_3__.default, {
+      appState: props.appState,
+      customer: props.customer,
+      customernote: props.customernote,
+      handleInputChange: handleInputChange
+    })
+  }),
+      _useState4 = _slicedToArray(_useState3, 2),
+      modalData = _useState4[0],
+      setModalData = _useState4[1];
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: "card",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
       className: "card-body",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("ul", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("li", {
-          children: ["Comment: ", customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("br", {}), "Author: ", customernote.creator_name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-            children: isValid ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
+          children: ["Comment: ", props.customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Author: ", props.customernote.creator_name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            children: isValidUser ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                 type: "button",
                 className: "btn btn-outline-primary edit-note-btn",
                 children: "Edit"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
                 type: "button",
                 className: "btn btn-outline-secondary edit-note-btn",
                 children: "Delete"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+                className: "modal-container",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalFormBtn__WEBPACK_IMPORTED_MODULE_2__.default, {
+                  className: "add-note-btn",
+                  appState: props.appState,
+                  modalData: modalData
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalForm__WEBPACK_IMPORTED_MODULE_1__.default, {
+                  appState: props.appState,
+                  modalData: modalData,
+                  handleSubmitForm: handleSubmitForm
+                })]
               })]
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               children: "\xA0"
             })
           })]
-        }, customernote.note_id)
+        }, props.customernote.note_id)
       })
     })
   });
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomerNoteData);
+
+/***/ }),
+
+/***/ "./resources/js/react/components/EditNoteForm.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/react/components/EditNoteForm.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+var EditNoteForm = function EditNoteForm(props) {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    className: "edit_note_form",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("form", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        className: "form-group",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+          htmlFor: "message-text",
+          className: "col-form-label",
+          children: "Note:"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("textarea", {
+          className: "form-control",
+          name: "customer_note",
+          defaultValue: props.customernote.note,
+          onChange: props.handleInputChange
+        })]
+      })
+    })
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditNoteForm);
 
 /***/ }),
 
@@ -9021,7 +9130,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n* {\n\tbox-sizing:  border-box;\n}\n\n:root {\n\t--siteColor-darkgrey:  #2b2d3c;\n}\n\nhtml {\n\tbackground-color: var(--siteColor-darkgrey, gray);\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\n}\n\nbody {\n\tline-height: 1.5;\n\tfont-family: \"Poppins\", sans-serif;\n\tmin-height: 100vh;\n\tbackground-size: cover;\n}\n\n.card {\n\tmargin-bottom: 20px;\n}\n\n.customerboard-container {\n\tborder:  none;\n}\n\n.add-note-btn, .edit-note-btn {\n\tposition: static;\n\tfloat: right;\n\tmargin-bottom: 25px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n.card {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.customerboard-container {\r\n\tborder:  none;\r\n}\r\n\r\n.add-note-btn, .edit-note-btn {\r\n\tposition: static;\r\n\tfloat: right;\r\n\tmargin-bottom: 25px;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
