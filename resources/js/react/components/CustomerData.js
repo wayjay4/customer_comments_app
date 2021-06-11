@@ -41,7 +41,7 @@ const CustomerData = (props) => {
 	};
 
 	const [modalData, setModalData] = useState({
-        'modal_id': 'modalForm'+props.customer.id,
+        'modal_id': 'modalAddForm'+props.customer.id,
         'modalLabel': 'customerNoteModal',
         'btn_text': 'Add A Customer Note',
         'modal_title': 'Add a customer note on '+props.customer.name+':',
@@ -82,7 +82,7 @@ const CustomerData = (props) => {
 	                            props.customer.customernote.map(
 	                                (customernote) => {
 	                                    return (
-	                                        <CustomerNoteData key={customernote.note_id} appState={props.appState} customernote={customernote} customerID={props.customer.id} />
+	                                        <CustomerNoteData key={customernote.note_id} appState={props.appState} customernote={customernote} customer={props.customer} />
 	                                    );
 	                                }
 	                            )
