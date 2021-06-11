@@ -13,6 +13,8 @@ function CustomerBoard() {
     // use effect
     useEffect(() => {
         window.onload = function() {
+            appState.apiKey = apiKey,
+            appState.apiUrl = apiUrl,
             appState.dataid = document.getElementById('customerboard').getAttribute('data_id');
             appState.getCustomerlist = getCustomerlist;
             appState.handleSubmitForm = handleSubmitForm;

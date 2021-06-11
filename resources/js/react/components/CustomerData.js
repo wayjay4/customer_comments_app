@@ -5,8 +5,6 @@ import ModalFormBtn from './ModalFormBtn';
 import AddNoteForm from './AddNoteForm';
 
 const CustomerData = (props) => {
-	const [apiKey, setApiKey] = useState('ol4wvmDgAmn5X3sNBjhIJgDOTfUpbpdnS2Z18I5u');
-	const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
 	const [formData, setFormData] = useState({});
 
 	const handleInputChange = (el) => {
@@ -17,14 +15,14 @@ const CustomerData = (props) => {
 	const handleSubmitForm = (el) => {
 		let userID = props.appState.dataid;
 		let customerID = props.customer.id;
-		let thisUrl = apiUrl+"users/"+userID+"/customers/"+customerID+"/customernotes";
+		let thisUrl = props.appState.apiUrl+"users/"+userID+"/customers/"+customerID+"/customernotes";
 		let thisMethod = "POST";
 
 		// make connection
 		fetch(thisUrl, {
 			"method": thisMethod,
 			"headers": {
-				"Authorization": "Bearer "+apiKey,
+				"Authorization": "Bearer "+props.appState.apiKey,
 				"Content-Type": "application/json",
 				"Accept": "application/json",
 				"Referer": location.origin,
