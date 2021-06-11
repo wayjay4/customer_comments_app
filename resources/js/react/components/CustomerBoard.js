@@ -9,20 +9,16 @@ function CustomerBoard() {
     const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
     const [customerlist, setCustomerlist] = useState({});
     const [recievedlist, setRecievedlist] = useState(false);
-    const [noteContents, setNoteContents] = useState('');
 
     // use effect
     useEffect(() => {
         window.onload = function() {
             appState.dataid = document.getElementById('customerboard').getAttribute('data_id');
             appState.getCustomerlist = getCustomerlist;
-            appState.onNoteChange = onNoteChange;
             appState.handleSubmitForm = handleSubmitForm;
             appState.validateFormFields = validateFormFields;
             appState.displayErrorMessage = displayErrorMessage;
             appState.customerlist = customerlist;
-            appState.noteContents = noteContents;
-            appState.setNoteContents = setNoteContents;
             appState.handleModalBtnClick = handleModalBtnClick;
 
             setAppState(appState);
@@ -52,13 +48,6 @@ function CustomerBoard() {
             console.log(err);
             setRecievedlist(true);
         });
-    };
-
-    const onNoteChange = (el) => {
-        let targetVal = el.target.value;
-        setNoteContents(targetVal);
-        console.log('targetVal: ');
-        console.log(noteContents);
     };
 
     const handleSubmitForm = (el) => {
@@ -147,7 +136,7 @@ function CustomerBoard() {
                                     customerlist.map(
                                         (customer) => {
                                             return (
-                                                <CustomerData key={customer.id} appState={appState} customer={customer} noteContents={noteContents} />
+                                                <CustomerData key={customer.id} appState={appState} customer={customer} />
                                             );
                                         }
                                     )

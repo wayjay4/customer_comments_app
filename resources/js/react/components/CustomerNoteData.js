@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CustomerNoteData = ({appState, customernote, customerID, noteContents}) => {
+const CustomerNoteData = ({appState, customernote, customerID}) => {
 	const isValid = (customernote.creator_id == appState.dataid);
 
 	return (
