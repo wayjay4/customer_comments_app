@@ -6,10 +6,26 @@ import AddNoteForm from './AddNoteForm';
 
 const CustomerData = (props) => {
 	const [formData, setFormData] = useState({});
+	const [formTargets, setFormTargets] = useState({});
 
+	// the user made a change to the form field
 	const handleInputChange = (el) => {
+		// save changes to textfield in formData
 		formData[el.target.name] = el.target.value;
 		setFormData(formData);
+
+		// save the target textfield in case we need to access it again
+		formTargets[el.target.name] = el.target;
+		setFormTargets(formTargets);
+	};
+
+	// the user cancelled editting
+	const handleCancelBtnClick = (el) => {
+		// reset formData to empty
+		setFormData({});
+		
+		// reset textfield to original values
+		$(formTargets.customer_note).val('');
 	};
 
 	const handleSubmitForm = (el) => {
@@ -74,7 +90,7 @@ const CustomerData = (props) => {
 					<div className="card card-body">
 						<div className="modal-container">
 							<ModalFormBtn className="add-note-btn" appState={props.appState} modalData={modalData} />
-	                    	<ModalForm appState={props.appState} modalData={modalData} handleSubmitForm={handleSubmitForm} />
+	                    	<ModalForm appState={props.appState} modalData={modalData} handleSubmitForm={handleSubmitForm} handleCancelBtnClick={handleCancelBtnClick} />
 						</div>
 
 	                    <div className="customernote-container">

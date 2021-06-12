@@ -4287,9 +4287,27 @@ var CustomerData = function CustomerData(props) {
       formData = _useState2[0],
       setFormData = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      formTargets = _useState4[0],
+      setFormTargets = _useState4[1]; // the user made a change to the form field
+
+
   var handleInputChange = function handleInputChange(el) {
+    // save changes to textfield in formData
     formData[el.target.name] = el.target.value;
-    setFormData(formData);
+    setFormData(formData); // save the target textfield in case we need to access it again
+
+    formTargets[el.target.name] = el.target;
+    setFormTargets(formTargets);
+  }; // the user cancelled editting
+
+
+  var handleCancelBtnClick = function handleCancelBtnClick(el) {
+    // reset formData to empty
+    setFormData({}); // reset textfield to original values
+
+    $(formTargets.customer_note).val('');
   };
 
   var handleSubmitForm = function handleSubmitForm(el) {
@@ -4317,7 +4335,7 @@ var CustomerData = function CustomerData(props) {
     $('#' + modalData.modal_id).modal('hide');
   };
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     'modal_id': 'modalAddForm' + props.customer.id,
     'modalLabel': 'customerNoteModal',
     'btn_text': 'Add A Customer Note',
@@ -4328,9 +4346,9 @@ var CustomerData = function CustomerData(props) {
       handleInputChange: handleInputChange
     })
   }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      modalData = _useState4[0],
-      setModalData = _useState4[1];
+      _useState6 = _slicedToArray(_useState5, 2),
+      modalData = _useState6[0],
+      setModalData = _useState6[1];
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "card customerdata-container",
@@ -4371,7 +4389,8 @@ var CustomerData = function CustomerData(props) {
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ModalForm__WEBPACK_IMPORTED_MODULE_2__.default, {
               appState: props.appState,
               modalData: modalData,
-              handleSubmitForm: handleSubmitForm
+              handleSubmitForm: handleSubmitForm,
+              handleCancelBtnClick: handleCancelBtnClick
             })]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "customernote-container",
@@ -4429,17 +4448,36 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var CustomerNoteData = function CustomerNoteData(props) {
-  var isValidUser = props.customernote.creator_id == props.appState.dataid;
-
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
       _useState2 = _slicedToArray(_useState, 2),
       formData = _useState2[0],
       setFormData = _useState2[1];
 
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+      _useState4 = _slicedToArray(_useState3, 2),
+      formTargets = _useState4[0],
+      setFormTargets = _useState4[1]; // validate if user is creator of customer note
+
+
+  var isValidUser = props.customernote.creator_id == props.appState.dataid; // the user made a change to the form field
+
   var handleInputChange = function handleInputChange(el) {
+    // save changes to textfield in formData
     formData[el.target.name] = el.target.value;
-    setFormData(formData);
-  };
+    setFormData(formData); // save the target textfield in case we need to access it again
+
+    formTargets[el.target.name] = el.target;
+    setFormTargets(formTargets);
+  }; // the user cancelled editting
+
+
+  var handleCancelBtnClick = function handleCancelBtnClick(el) {
+    // reset formData to empty
+    setFormData({}); // reset textfield to original values
+
+    $(formTargets.customer_note).val(props.customernote.note);
+  }; // the user submitted a update request to the db
+
 
   var handleSubmitForm = function handleSubmitForm(el) {
     var thisUrl = props.appState.apiUrl + "users/" + props.appState.dataid + "/customernotes/" + props.customernote.note_id;
@@ -4462,7 +4500,8 @@ var CustomerNoteData = function CustomerNoteData(props) {
       console.log(err);
     });
     $('#' + modalData.modal_id).modal('hide');
-  };
+  }; // the user submitted a delete request to the db
+
 
   var handleDeleteForm = function handleDeleteForm(el) {
     // confirm deletion with user
@@ -4491,10 +4530,11 @@ var CustomerNoteData = function CustomerNoteData(props) {
     }
 
     return confirmDelete;
-  };
+  }; // set the modal values for editing customer data
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    'modal_id': 'modalEditForm' + props.customer.id,
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    'modal_id': 'modalEditForm' + props.customernote.note_id,
     'modalLabel': 'customerNoteModal',
     'btn_text': 'Edit',
     'modal_title': 'Edit a customer note on ' + props.customer.name + ':',
@@ -4505,9 +4545,9 @@ var CustomerNoteData = function CustomerNoteData(props) {
       handleInputChange: handleInputChange
     })
   }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      modalData = _useState4[0],
-      setModalData = _useState4[1];
+      _useState6 = _slicedToArray(_useState5, 2),
+      modalData = _useState6[0],
+      setModalData = _useState6[1];
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
     className: "card",
@@ -4516,7 +4556,8 @@ var CustomerNoteData = function CustomerNoteData(props) {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("li", {
           children: ["Comment: ", props.customernote.note, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), "Author: ", props.customernote.creator_name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            children: isValidUser ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            children: // if user is creator of note then show 'edit' and 'delete' options for customer note
+            isValidUser ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
               children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
                 className: "modal-container",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
@@ -4531,7 +4572,8 @@ var CustomerNoteData = function CustomerNoteData(props) {
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ModalForm__WEBPACK_IMPORTED_MODULE_1__.default, {
                   appState: props.appState,
                   modalData: modalData,
-                  handleSubmitForm: handleSubmitForm
+                  handleSubmitForm: handleSubmitForm,
+                  handleCancelBtnClick: handleCancelBtnClick
                 })]
               })
             }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
@@ -4645,12 +4687,13 @@ var ModalForm = function ModalForm(props) {
               type: "button",
               className: "btn btn-secondary",
               "data-dismiss": "modal",
-              children: "Close"
+              onClick: props.handleCancelBtnClick,
+              children: "Cancel"
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
               type: "button",
               className: "btn btn-primary",
               onClick: props.handleSubmitForm,
-              children: "Save Note"
+              children: "Save"
             })]
           })]
         })
@@ -9153,7 +9196,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n.card {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.customerboard-container {\r\n\tborder:  none;\r\n}\r\n\r\n.add-note-btn, .edit-note-btn {\r\n\tposition: static;\r\n\tfloat: right;\r\n\tmargin-bottom: 25px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n* {\n\tbox-sizing:  border-box;\n}\n\n:root {\n\t--siteColor-darkgrey:  #2b2d3c;\n}\n\nhtml {\n\tbackground-color: var(--siteColor-darkgrey, gray);\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\n}\n\nbody {\n\tline-height: 1.5;\n\tfont-family: \"Poppins\", sans-serif;\n\tmin-height: 100vh;\n\tbackground-size: cover;\n}\n\n.card {\n\tmargin-bottom: 20px;\n}\n\n.customerboard-container {\n\tborder:  none;\n}\n\n.add-note-btn, .edit-note-btn {\n\tposition: static;\n\tfloat: right;\n\tmargin-bottom: 25px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

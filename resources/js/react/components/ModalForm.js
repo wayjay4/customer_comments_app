@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 
 const ModalForm = (props) => {
-
 	return (
 		<div className="container modalform_ctnr">
 			<div className="modal fade" id={props.modalData.modal_id} tabIndex="-1" aria-labelledby={props.modalData.modalLabel} aria-hidden="true">
@@ -17,8 +16,8 @@ const ModalForm = (props) => {
 							{props.modalData.modal_body}
 						</div>
 						<div className="modal-footer">
-							<button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="button" className="btn btn-primary" onClick={props.handleSubmitForm}>Save Note</button>
+							<button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={props.handleCancelBtnClick}>Cancel</button>
+							<button type="button" className="btn btn-primary" onClick={props.handleSubmitForm}>Save</button>
 						</div>
 					</div>
 				</div>
