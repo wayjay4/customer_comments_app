@@ -21,6 +21,10 @@ const CustomerData = (props) => {
 
 	// the user cancelled editting
 	const handleCancelBtnClick = (el) => {
+		resetEditorForm();
+	};
+
+	const resetEditorForm = () => {
 		// reset formData to empty
 		setFormData({});
 		
@@ -48,6 +52,7 @@ const CustomerData = (props) => {
 		.then(response => response.json())
 		.then(response => {
 			props.appState.handleNoteUpdate(response);
+			resetEditorForm();
 		})
 		.catch(err => {
 			console.log(err);

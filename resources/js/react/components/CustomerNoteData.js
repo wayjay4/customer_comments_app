@@ -23,6 +23,10 @@ const CustomerNoteData = (props) => {
 
 	// the user cancelled editting
 	const handleCancelBtnClick = (el) => {
+		resetEditorForm();
+	};
+
+	const resetEditorForm = () => {
 		// reset formData to empty
 		setFormData({});
 		
