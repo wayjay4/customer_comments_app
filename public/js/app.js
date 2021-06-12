@@ -4122,7 +4122,7 @@ function CustomerBoard() {
       appState.validateFormFields = validateFormFields;
       appState.displayErrorMessage = displayErrorMessage;
       appState.customerlist = customerlist;
-      appState.handleModalBtnClick = handleModalBtnClick;
+      appState.handleNoteUpdate = handleNoteUpdate;
       setAppState(appState);
       getCustomerlist();
     };
@@ -4143,7 +4143,6 @@ function CustomerBoard() {
     }).then(function (response) {
       setCustomerlist(response);
       setRecievedlist(true);
-      console.log(response);
     })["catch"](function (err) {
       console.log(err);
       setRecievedlist(true);
@@ -4206,9 +4205,8 @@ function CustomerBoard() {
     alert(theMessage);
   };
 
-  var handleModalBtnClick = function handleModalBtnClick(el) {
-    console.log('ModalForm btn-click, target element: ');
-    console.log(el);
+  var handleNoteUpdate = function handleNoteUpdate(response) {
+    getCustomerlist();
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -4312,10 +4310,11 @@ var CustomerData = function CustomerData(props) {
     }).then(function (response) {
       return response.json();
     }).then(function (response) {
-      console.log(response);
+      props.appState.handleNoteUpdate(response);
     })["catch"](function (err) {
       console.log(err);
     });
+    $('#' + modalData.modal_id).modal('hide');
   };
 
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -4458,10 +4457,11 @@ var CustomerNoteData = function CustomerNoteData(props) {
     }).then(function (response) {
       return response.json();
     }).then(function (response) {
-      console.log(response);
+      props.appState.handleNoteUpdate(response);
     })["catch"](function (err) {
       console.log(err);
     });
+    $('#' + modalData.modal_id).modal('hide');
   };
 
   var handleDeleteForm = function handleDeleteForm(el) {
@@ -4483,10 +4483,11 @@ var CustomerNoteData = function CustomerNoteData(props) {
       }).then(function (response) {
         return response.json();
       }).then(function (response) {
-        console.log(response);
+        props.appState.handleNoteUpdate(response);
       })["catch"](function (err) {
         console.log(err);
       });
+      $('#' + modalData.modal_id).modal('hide');
     }
 
     return confirmDelete;
@@ -4685,7 +4686,6 @@ var ModalFormBtn = function ModalFormBtn(props) {
       className: "btn btn-outline-primary " + props.className,
       "data-toggle": "modal",
       "data-target": "#" + props.modalData.modal_id,
-      onClick: props.appState.handleModalBtnClick,
       children: props.modalData.btn_text
     })
   });

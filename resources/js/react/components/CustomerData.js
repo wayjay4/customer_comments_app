@@ -31,11 +31,13 @@ const CustomerData = (props) => {
 		})
 		.then(response => response.json())
 		.then(response => {
-			console.log(response);
+			props.appState.handleNoteUpdate(response);
 		})
 		.catch(err => {
 			console.log(err);
 		});
+
+		$('#'+modalData.modal_id).modal('hide');
 	};
 
 	const [modalData, setModalData] = useState({

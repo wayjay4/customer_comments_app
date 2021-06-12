@@ -21,7 +21,7 @@ function CustomerBoard() {
             appState.validateFormFields = validateFormFields;
             appState.displayErrorMessage = displayErrorMessage;
             appState.customerlist = customerlist;
-            appState.handleModalBtnClick = handleModalBtnClick;
+            appState.handleNoteUpdate = handleNoteUpdate;
 
             setAppState(appState);
 
@@ -44,7 +44,6 @@ function CustomerBoard() {
         .then(response => {
             setCustomerlist(response);
             setRecievedlist(true);
-            console.log(response);
         })
         .catch(err => {
             console.log(err);
@@ -115,9 +114,8 @@ function CustomerBoard() {
         alert(theMessage);
     };
 
-    const handleModalBtnClick = (el) => {
-        console.log('ModalForm btn-click, target element: ');
-        console.log(el);
+    const handleNoteUpdate = (response) => {    
+        getCustomerlist();
     };
 
     return (
