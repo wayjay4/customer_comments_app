@@ -4113,10 +4113,10 @@ function CustomerBoard() {
       recievedlist = _useState10[0],
       setRecievedlist = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('asc'),
       _useState12 = _slicedToArray(_useState11, 2),
-      sortNameToggle = _useState12[0],
-      setSortNameToggle = _useState12[1]; // use effect
+      orderBy = _useState12[0],
+      setOrderBy = _useState12[1]; // use effect
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -4146,9 +4146,8 @@ function CustomerBoard() {
     }).then(function (response) {
       return response.json();
     }).then(function (response) {
-      setCustomerlist(response);
+      setCustomerlist(sortList(orderBy, response));
       setRecievedlist(true);
-      console.log(response);
     })["catch"](function (err) {
       console.log(err);
       setRecievedlist(true);
@@ -4215,36 +4214,45 @@ function CustomerBoard() {
     getCustomerlist();
   };
 
-  var nameButtonClickHandler = function nameButtonClickHandler(el) {
-    sortList();
+  var sortButtonClickHandler = function sortButtonClickHandler(el) {
+    var thisOrderBy; // if true, set orderBy to ascending, else descending
+
+    if (orderBy == 'desc') {
+      thisOrderBy = 'asc';
+    } else if (orderBy == 'asc') {
+      thisOrderBy = 'desc';
+    } // update customerlist with new ordered list
+
+
+    setCustomerlist(sortList(thisOrderBy, customerlist));
   };
 
-  var sortList = function sortList() {
-    var byName = customerlist.slice(0); // sort name by ascending function
+  var sortList = function sortList(sortBy, customerlist) {
+    var sortedList = customerlist.slice(0); // sort customer list by name while toggling between 'asc' and 'desc'
 
-    var sortByNameAsc = function sortByNameAsc(a, b) {
-      var x = a.name.toLowerCase();
-      var y = b.name.toLowerCase();
-      return x < y ? -1 : x > y ? 1 : 0;
-    }; // sort name by descending function
-
-
-    var sortByNameDesc = function sortByNameDesc(b, a) {
-      var x = a.name.toLowerCase();
-      var y = b.name.toLowerCase();
-      return x < y ? -1 : x > y ? 1 : 0;
-    }; // sort customer list by name while toggling between 'asc' and 'desc'
-
-
-    if (sortNameToggle) {
-      byName.sort(sortByNameAsc);
-    } else {
-      byName.sort(sortByNameDesc);
+    if (sortBy == 'asc') {
+      sortedList.sort(sortByNameAsc);
+      setOrderBy(sortBy);
+    } else if (sortBy == 'desc') {
+      sortedList.sort(sortByNameDesc);
+      setOrderBy(sortBy);
     }
 
-    setSortNameToggle(!sortNameToggle); // re-set customerlist with sorted data
+    return sortedList;
+  }; // sort name by ascending function
 
-    setCustomerlist(byName);
+
+  var sortByNameAsc = function sortByNameAsc(a, b) {
+    var x = a.name.toLowerCase();
+    var y = b.name.toLowerCase();
+    return x < y ? -1 : x > y ? 1 : 0;
+  }; // sort name by descending function
+
+
+  var sortByNameDesc = function sortByNameDesc(b, a) {
+    var x = a.name.toLowerCase();
+    var y = b.name.toLowerCase();
+    return x < y ? -1 : x > y ? 1 : 0;
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -4274,7 +4282,7 @@ function CustomerBoard() {
                     scope: "col",
                     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                       type: "button",
-                      onClick: nameButtonClickHandler,
+                      onClick: sortButtonClickHandler,
                       style: {
                         'fontWeight': 'bold'
                       },

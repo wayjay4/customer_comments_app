@@ -9,7 +9,7 @@ function CustomerBoard() {
     const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
     const [customerlist, setCustomerlist] = useState({});
     const [recievedlist, setRecievedlist] = useState(false);
-    const [sortNameToggle, setSortNameToggle] = useState(true);
+    const [orderBy, setOrderBy] = useState('asc');
 
     // use effect
     useEffect(() => {
@@ -43,9 +43,8 @@ function CustomerBoard() {
         })
         .then(response => response.json())
         .then(response => {
-            setCustomerlist(response);
+            setCustomerlist(sortList(orderBy, response));
             setRecievedlist(true);
-            console.log(response);
         })
         .catch(err => {
             console.log(err);
@@ -120,39 +119,50 @@ function CustomerBoard() {
         getCustomerlist();
     };
 
-    const nameButtonClickHandler = (el) => {
-        sortList();
+    const sortButtonClickHandler = (el) => {
+        let thisOrderBy;
+
+        // if true, set orderBy to ascending, else descending
+        if(orderBy == 'desc'){
+            thisOrderBy = 'asc';
+        }
+        else if(orderBy == 'asc'){
+            thisOrderBy = 'desc';
+        }
+
+        // update customerlist with new ordered list
+        setCustomerlist(sortList(thisOrderBy, customerlist));
     };
 
-    const sortList = () => {
-        let byName = customerlist.slice(0);
-
-        // sort name by ascending function
-        let sortByNameAsc = (a,b) => {
-            var x = a.name.toLowerCase();
-            var y = b.name.toLowerCase();
-            return x < y ? -1 : x > y ? 1 : 0;
-        };
-
-        // sort name by descending function
-        let sortByNameDesc = (b,a) => {
-            var x = a.name.toLowerCase();
-            var y = b.name.toLowerCase();
-            return x < y ? -1 : x > y ? 1 : 0;
-        };
+    const sortList = (sortBy, customerlist) => {
+        let sortedList = customerlist.slice(0);
 
         // sort customer list by name while toggling between 'asc' and 'desc'
-        if(sortNameToggle){
-            byName.sort(sortByNameAsc);
+        if(sortBy == 'asc'){
+            sortedList.sort(sortByNameAsc);
+            setOrderBy(sortBy);
         }
-        else{
-            byName.sort(sortByNameDesc);
+        else if(sortBy == 'desc'){
+            sortedList.sort(sortByNameDesc);
+            setOrderBy(sortBy);
         }
-        setSortNameToggle(!sortNameToggle);
 
-        // re-set customerlist with sorted data
-        setCustomerlist(byName);
+        return(sortedList);
 
+    };
+
+    // sort name by ascending function
+    const sortByNameAsc = (a,b) => {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+    };
+
+    // sort name by descending function
+    const sortByNameDesc = (b,a) => {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
     };
 
     return (
@@ -173,7 +183,7 @@ function CustomerBoard() {
                                     <thead>
                                         <tr>
                                             <th colSpan="1" scope="col">#</th>
-                                            <th colSpan="1" scope="col"><button type="button" onClick={nameButtonClickHandler} style={{'fontWeight': 'bold',}}>Name</button></th>
+                                            <th colSpan="1" scope="col"><button type="button" onClick={sortButtonClickHandler} style={{'fontWeight': 'bold',}}>Name</button></th>
                                             <th colSpan="1" scope="col">Address</th>
                                             <th colSpan="1" scope="col">Email</th>
                                             <th colSpan="1" scope="col">Phone</th>
