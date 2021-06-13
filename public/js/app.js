@@ -4346,7 +4346,7 @@ var CustomerData = function CustomerData(props) {
   var validateForm = function validateForm() {
     // validate the customer_note form field
     if (typeof formData['customer_note'] === 'undefined' || formData['customer_note'].length < 5) {
-      displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
+      displayErrorMessage('note', 'A valid \'note\' must contain at least five(5) characters.');
       return false;
     }
 
@@ -4359,8 +4359,8 @@ var CustomerData = function CustomerData(props) {
     arr[index] = encodeURI(item);
   };
 
-  var displayErrorMessage = function displayErrorMessage(msg) {
-    var eMessage = "Please provide a valid '" + msg + "' value. ";
+  var displayErrorMessage = function displayErrorMessage(item, msg) {
+    var eMessage = "Please provide a valid '" + item + "' value. " + msg;
     alert(eMessage);
   };
 
@@ -4541,8 +4541,13 @@ var CustomerNoteData = function CustomerNoteData(props) {
   var validateForm = function validateForm() {
     // validate the customer_note form field
     if (typeof formData['customer_note'] === 'undefined' || formData['customer_note'].length < 5) {
-      displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
-      return false;
+      if (typeof formData['customer_note'] === 'undefined') {
+        displayErrorMessage('customernote', 'A change to the \'note\' value must be made before saving.');
+        return false;
+      } else if (formData['customer_note'].length < 5) {
+        displayErrorMessage('customernote', 'A valid \'note\' must contain at least five(5) characters.');
+        return false;
+      }
     }
 
     return true;
@@ -4554,8 +4559,8 @@ var CustomerNoteData = function CustomerNoteData(props) {
     arr[index] = encodeURI(item);
   };
 
-  var displayErrorMessage = function displayErrorMessage(msg) {
-    var eMessage = "Please provide a valid '" + msg + "' value. ";
+  var displayErrorMessage = function displayErrorMessage(item, msg) {
+    var eMessage = "Please provide a valid '" + item + "' value. " + msg;
     alert(eMessage);
   }; // the user submitted a delete request to the db
 

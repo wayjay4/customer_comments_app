@@ -67,7 +67,7 @@ const CustomerData = (props) => {
 	const validateForm = () => {
 		// validate the customer_note form field
 		if((typeof formData['customer_note'] === 'undefined') || (formData['customer_note'].length < 5)){
-			displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
+			displayErrorMessage('note', 'A valid \'note\' must contain at least five(5) characters.');
 			return false;
 		}
 
@@ -80,8 +80,8 @@ const CustomerData = (props) => {
 		arr[index] = encodeURI(item);
 	};
 
-	const displayErrorMessage = (msg) => {
-		let eMessage = "Please provide a valid '"+msg+"' value. ";
+	const displayErrorMessage = (item, msg) => {
+		let eMessage = "Please provide a valid '"+item+"' value. "+msg;
 		alert(eMessage);
 	};
 
