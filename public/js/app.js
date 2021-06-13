@@ -4143,6 +4143,7 @@ function CustomerBoard() {
     }).then(function (response) {
       setCustomerlist(response);
       setRecievedlist(true);
+      console.log(response);
     })["catch"](function (err) {
       console.log(err);
       setRecievedlist(true);
@@ -4223,11 +4224,52 @@ function CustomerBoard() {
           }), !recievedlist ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             children: "There are no customer records to display."
           }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-            children: customerlist.map(function (customer) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_CustomerData__WEBPACK_IMPORTED_MODULE_2__.default, {
-                appState: appState,
-                customer: customer
-              }, customer.id);
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
+              className: "table table-sm",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("thead", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                    colSpan: "1",
+                    scope: "col",
+                    children: "#"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                    colSpan: "1",
+                    scope: "col",
+                    children: "Name"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                    colSpan: "1",
+                    scope: "col",
+                    children: "Address"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                    colSpan: "1",
+                    scope: "col",
+                    children: "Email"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                    colSpan: "1",
+                    scope: "col",
+                    children: "Phone"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                    colSpan: "1",
+                    scope: "col",
+                    children: "**"
+                  })]
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
+                children: customerlist.map(function (customer) {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                      colSpan: "1",
+                      children: customer.id
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                      colSpan: "5",
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_CustomerData__WEBPACK_IMPORTED_MODULE_2__.default, {
+                        appState: appState,
+                        customer: customer
+                      }, customer.id)
+                    })]
+                  }, customer.id);
+                })
+              })]
             })
           })]
         })
@@ -4379,60 +4421,94 @@ var CustomerData = function CustomerData(props) {
       modalData = _useState6[0],
       setModalData = _useState6[1];
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-    className: "card customerdata-container",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-      className: "card-body",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h5", {
-        className: "card-title",
-        children: props.customer.name
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-        className: "card-text",
-        children: [props.customer.address, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), props.customer.city, ", ", props.customer.state, " ", props.customer.zipcode]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("p", {
-        children: [props.customer.phone, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), props.customer.email]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
-          className: "btn btn-outline-info",
-          type: "button",
-          "data-toggle": "collapse",
-          "data-target": '#collapse-notes-' + props.customer.id,
-          "aria-expanded": "false",
-          "aria-controls": 'collapse-notes-' + props.customer.id,
-          children: "View Customer Notes"
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
+    className: "table table-borderless",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
+      hidden: true,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+          colSpan: "1",
+          scope: "col",
+          children: "Name"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+          colSpan: "1",
+          scope: "col",
+          children: "Address"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+          colSpan: "1",
+          scope: "col",
+          children: "Email"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+          colSpan: "1",
+          scope: "col",
+          children: "Phone"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+          colSpan: "1",
+          scope: "col",
+          children: "**"
+        })]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tbody", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+          colSpan: "1",
+          scope: "row",
+          children: props.customer.name
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("td", {
+          colSpan: "1",
+          children: [props.customer.address, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), props.customer.city, ", ", props.customer.state, " ", props.customer.zipcode]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+          colSpan: "1",
+          children: props.customer.email
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+          colSpan: "1",
+          children: props.customer.phone
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+          colSpan: "1",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+            className: "btn btn-outline-info btn-sm",
+            type: "button",
+            "data-toggle": "collapse",
+            "data-target": '#collapse-notes-' + props.customer.id,
+            "aria-expanded": "false",
+            "aria-controls": 'collapse-notes-' + props.customer.id,
+            children: "View Customer Notes"
+          })
+        })]
+      }, props.customer.id), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tr", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+          colSpan: "5",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "collapse",
+            id: 'collapse-notes-' + props.customer.id,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+              className: "card card-body",
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+                className: "modal-container",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ModalFormBtn__WEBPACK_IMPORTED_MODULE_3__.default, {
+                  className: "add-note-btn",
+                  appState: props.appState,
+                  modalData: modalData
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ModalForm__WEBPACK_IMPORTED_MODULE_2__.default, {
+                  appState: props.appState,
+                  modalData: modalData,
+                  handleSubmitForm: handleSubmitForm,
+                  handleCancelBtnClick: handleCancelBtnClick
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+                className: "customernote-container",
+                children: props.customer.customernote.map(function (customernote) {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_CustomerNoteData__WEBPACK_IMPORTED_MODULE_1__.default, {
+                    appState: props.appState,
+                    customernote: customernote,
+                    customer: props.customer
+                  }, customernote.note_id);
+                })
+              })]
+            })
+          })
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-      className: "card-body",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        className: "collapse",
-        id: 'collapse-notes-' + props.customer.id,
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-          className: "card card-body",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
-            className: "modal-container",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ModalFormBtn__WEBPACK_IMPORTED_MODULE_3__.default, {
-              className: "add-note-btn",
-              appState: props.appState,
-              modalData: modalData
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ModalForm__WEBPACK_IMPORTED_MODULE_2__.default, {
-              appState: props.appState,
-              modalData: modalData,
-              handleSubmitForm: handleSubmitForm,
-              handleCancelBtnClick: handleCancelBtnClick
-            })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            className: "customernote-container",
-            children: props.customer.customernote.map(function (customernote) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_CustomerNoteData__WEBPACK_IMPORTED_MODULE_1__.default, {
-                appState: props.appState,
-                customernote: customernote,
-                customer: props.customer
-              }, customernote.note_id);
-            })
-          })]
-        })
-      })
     })]
   });
 };
@@ -9258,7 +9334,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n* {\r\n\tbox-sizing:  border-box;\r\n}\r\n\r\n:root {\r\n\t--siteColor-darkgrey:  #2b2d3c;\r\n}\r\n\r\nhtml {\r\n\tbackground-color: var(--siteColor-darkgrey, gray);\r\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\r\n}\r\n\r\nbody {\r\n\tline-height: 1.5;\r\n\tfont-family: \"Poppins\", sans-serif;\r\n\tmin-height: 100vh;\r\n\tbackground-size: cover;\r\n}\r\n\r\n.card {\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.customerboard-container {\r\n\tborder:  none;\r\n}\r\n\r\n.add-note-btn, .edit-note-btn {\r\n\tposition: static;\r\n\tfloat: right;\r\n\tmargin-bottom: 25px;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n* {\n\tbox-sizing:  border-box;\n}\n\n:root {\n\t--siteColor-darkgrey:  #2b2d3c;\n}\n\nhtml {\n\tbackground-color: var(--siteColor-darkgrey, gray);\n\tbackground: url(/images/backgrounds/blueblackhue_bground.jpg) no-repeat center center fixed;\n}\n\nbody {\n\tline-height: 1.5;\n\tfont-family: \"Poppins\", sans-serif;\n\tmin-height: 100vh;\n\tbackground-size: cover;\n}\n\n.card {\n\tmargin-bottom: 20px;\n}\n\n.customerboard-container {\n\tborder:  none;\n}\n\n.add-note-btn, .edit-note-btn {\n\tposition: static;\n\tfloat: right;\n\tmargin-bottom: 25px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -94,50 +94,60 @@ const CustomerData = (props) => {
 	});
 
 	return (
-		<div className="card customerdata-container">
-			<div className="card-body">
-				<h5 className="card-title">{props.customer.name}</h5>
-				<p className="card-text">
-					{props.customer.address}
-					<br />
-					{props.customer.city}, {props.customer.state} {props.customer.zipcode}
-				</p>
-				<p>
-					{props.customer.phone}
-					<br />
-					{props.customer.email}
-				</p>
-				<p>
-					<button className="btn btn-outline-info" type="button" data-toggle="collapse" data-target={'#collapse-notes-'+props.customer.id} aria-expanded="false" aria-controls={'collapse-notes-'+props.customer.id}>
-						View Customer Notes
-					</button>
-				</p>
-			</div>
+		<table className="table table-borderless">
+		    <thead hidden>
+		        <tr>
+		            <th colSpan="1" scope="col">Name</th>
+		            <th colSpan="1" scope="col">Address</th>
+		            <th colSpan="1" scope="col">Email</th>
+		            <th colSpan="1" scope="col">Phone</th>
+		            <th colSpan="1" scope="col">**</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr key={props.customer.id}>
+					<th colSpan="1" scope="row">{props.customer.name}</th>
+					<td colSpan="1">
+						{props.customer.address}
+						<br />
+						{props.customer.city}, {props.customer.state} {props.customer.zipcode}			
+					</td>
+					<td colSpan="1">{props.customer.email}</td>
+					<td colSpan="1">{props.customer.phone}</td>
+					<td colSpan="1">
+						<button className="btn btn-outline-info btn-sm" type="button" data-toggle="collapse" data-target={'#collapse-notes-'+props.customer.id} aria-expanded="false" aria-controls={'collapse-notes-'+props.customer.id}>
+							View Customer Notes
+						</button>
+					</td>
+        		</tr>
 
-			<div className="card-body">
-				<div className="collapse" id={'collapse-notes-'+props.customer.id}>
-					<div className="card card-body">
-						<div className="modal-container">
-							<ModalFormBtn className="add-note-btn" appState={props.appState} modalData={modalData} />
-	                    	<ModalForm appState={props.appState} modalData={modalData} handleSubmitForm={handleSubmitForm} handleCancelBtnClick={handleCancelBtnClick} />
+        		<tr>
+        			<td colSpan="5">
+						<div className="collapse" id={'collapse-notes-'+props.customer.id}>
+							<div className="card card-body">
+								<div className="modal-container">
+									<ModalFormBtn className="add-note-btn" appState={props.appState} modalData={modalData} />
+			                    	<ModalForm appState={props.appState} modalData={modalData} handleSubmitForm={handleSubmitForm} handleCancelBtnClick={handleCancelBtnClick} />
+								</div>
+
+			                    <div className="customernote-container">
+			                        {
+			                            props.customer.customernote.map(
+			                                (customernote) => {
+			                                    return (
+			                                        <CustomerNoteData key={customernote.note_id} appState={props.appState} customernote={customernote} customer={props.customer} />
+			                                    );
+			                                }
+			                            )
+			                        }
+			                    </div>
+							</div>
 						</div>
-
-	                    <div className="customernote-container">
-	                        {
-	                            props.customer.customernote.map(
-	                                (customernote) => {
-	                                    return (
-	                                        <CustomerNoteData key={customernote.note_id} appState={props.appState} customernote={customernote} customer={props.customer} />
-	                                    );
-	                                }
-	                            )
-	                        }
-	                    </div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+        			</td>
+        		</tr>
+            </tbody>
+        </table>
+   	);
 };
 
 export default CustomerData;

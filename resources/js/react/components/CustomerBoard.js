@@ -44,6 +44,7 @@ function CustomerBoard() {
         .then(response => {
             setCustomerlist(response);
             setRecievedlist(true);
+            console.log(response);
         })
         .catch(err => {
             console.log(err);
@@ -132,15 +133,36 @@ function CustomerBoard() {
                             </div>
                             :
                             <div>
-                                {
-                                    customerlist.map(
-                                        (customer) => {
-                                            return (
-                                                <CustomerData key={customer.id} appState={appState} customer={customer} />
-                                            );
+                                <table className="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th colSpan="1" scope="col">#</th>
+                                            <th colSpan="1" scope="col">Name</th>
+                                            <th colSpan="1" scope="col">Address</th>
+                                            <th colSpan="1" scope="col">Email</th>
+                                            <th colSpan="1" scope="col">Phone</th>
+                                            <th colSpan="1" scope="col">**</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            customerlist.map(
+                                                (customer) => {
+                                                    return (
+                                                        <tr key={customer.id} >
+                                                            <th colSpan="1">
+                                                                {customer.id}
+                                                            </th>
+                                                            <td colSpan="5">
+                                                                <CustomerData key={customer.id} appState={appState} customer={customer} />
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                }
+                                            )
                                         }
-                                    )
-                                }
+                                    </tbody>
+                                </table>
                             </div>
                         }
                     </div>
