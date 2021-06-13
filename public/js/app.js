@@ -4111,7 +4111,12 @@ function CustomerBoard() {
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState10 = _slicedToArray(_useState9, 2),
       recievedlist = _useState10[0],
-      setRecievedlist = _useState10[1]; // use effect
+      setRecievedlist = _useState10[1];
+
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      _useState12 = _slicedToArray(_useState11, 2),
+      sortNameToggle = _useState12[0],
+      setSortNameToggle = _useState12[1]; // use effect
 
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -4210,6 +4215,38 @@ function CustomerBoard() {
     getCustomerlist();
   };
 
+  var nameButtonClickHandler = function nameButtonClickHandler(el) {
+    sortList();
+  };
+
+  var sortList = function sortList() {
+    var byName = customerlist.slice(0); // sort name by ascending function
+
+    var sortByNameAsc = function sortByNameAsc(a, b) {
+      var x = a.name.toLowerCase();
+      var y = b.name.toLowerCase();
+      return x < y ? -1 : x > y ? 1 : 0;
+    }; // sort name by descending function
+
+
+    var sortByNameDesc = function sortByNameDesc(b, a) {
+      var x = a.name.toLowerCase();
+      var y = b.name.toLowerCase();
+      return x < y ? -1 : x > y ? 1 : 0;
+    }; // sort customer list by name while toggling between 'asc' and 'desc'
+
+
+    if (sortNameToggle) {
+      byName.sort(sortByNameAsc);
+    } else {
+      byName.sort(sortByNameDesc);
+    }
+
+    setSortNameToggle(!sortNameToggle); // re-set customerlist with sorted data
+
+    setCustomerlist(byName);
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
     className: "container",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
@@ -4235,7 +4272,14 @@ function CustomerBoard() {
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
                     colSpan: "1",
                     scope: "col",
-                    children: "Name"
+                    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
+                      type: "button",
+                      onClick: nameButtonClickHandler,
+                      style: {
+                        'fontWeight': 'bold'
+                      },
+                      children: "Name"
+                    })
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
                     colSpan: "1",
                     scope: "col",

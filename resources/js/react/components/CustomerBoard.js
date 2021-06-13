@@ -9,6 +9,7 @@ function CustomerBoard() {
     const [apiUrl, setApiUrl] = useState(location.origin+'/api/');
     const [customerlist, setCustomerlist] = useState({});
     const [recievedlist, setRecievedlist] = useState(false);
+    const [sortNameToggle, setSortNameToggle] = useState(true);
 
     // use effect
     useEffect(() => {
@@ -119,6 +120,41 @@ function CustomerBoard() {
         getCustomerlist();
     };
 
+    const nameButtonClickHandler = (el) => {
+        sortList();
+    };
+
+    const sortList = () => {
+        let byName = customerlist.slice(0);
+
+        // sort name by ascending function
+        let sortByNameAsc = (a,b) => {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        };
+
+        // sort name by descending function
+        let sortByNameDesc = (b,a) => {
+            var x = a.name.toLowerCase();
+            var y = b.name.toLowerCase();
+            return x < y ? -1 : x > y ? 1 : 0;
+        };
+
+        // sort customer list by name while toggling between 'asc' and 'desc'
+        if(sortNameToggle){
+            byName.sort(sortByNameAsc);
+        }
+        else{
+            byName.sort(sortByNameDesc);
+        }
+        setSortNameToggle(!sortNameToggle);
+
+        // re-set customerlist with sorted data
+        setCustomerlist(byName);
+
+    };
+
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -137,7 +173,7 @@ function CustomerBoard() {
                                     <thead>
                                         <tr>
                                             <th colSpan="1" scope="col">#</th>
-                                            <th colSpan="1" scope="col">Name</th>
+                                            <th colSpan="1" scope="col"><button type="button" onClick={nameButtonClickHandler} style={{'fontWeight': 'bold',}}>Name</button></th>
                                             <th colSpan="1" scope="col">Address</th>
                                             <th colSpan="1" scope="col">Email</th>
                                             <th colSpan="1" scope="col">Phone</th>
