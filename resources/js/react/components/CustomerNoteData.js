@@ -36,29 +36,53 @@ const CustomerNoteData = (props) => {
 
 	// the user submitted a update request to the db
 	const handleSubmitForm = (el) => {
-		let thisUrl = props.appState.apiUrl+"users/"+props.appState.dataid+"/customernotes/"+props.customernote.note_id;
-		let thisMethod = "PUT";
+		if(validateForm()){
+			let thisUrl = props.appState.apiUrl+"users/"+props.appState.dataid+"/customernotes/"+props.customernote.note_id;
+			let thisMethod = "PUT";
 
-		// make connection
-		fetch(thisUrl, {
-			"method": thisMethod,
-			"headers": {
-				"Authorization": "Bearer "+props.appState.apiKey,
-				"Content-Type": "application/json",
-				"Accept": "application/json",
-				"Referer": location.origin,
-			},
-			"body": JSON.stringify(formData),
-		})
-		.then(response => response.json())
-		.then(response => {
-			props.appState.handleNoteUpdate(response);
-		})
-		.catch(err => {
-			console.log(err);
-		});
-		
-		$('#'+modalData.modal_id).modal('hide');
+			// make connection
+			fetch(thisUrl, {
+				"method": thisMethod,
+				"headers": {
+					"Authorization": "Bearer "+props.appState.apiKey,
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Referer": location.origin,
+				},
+				"body": JSON.stringify(formData),
+			})
+			.then(response => response.json())
+			.then(response => {
+				props.appState.handleNoteUpdate(response);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+			
+			$('#'+modalData.modal_id).modal('hide');
+		}
+	};
+
+	// add any required form validations here
+	const validateForm = () => {
+		// validate the customer_note form field
+		if((typeof formData['customer_note'] === 'undefined') || (formData['customer_note'].length < 5)){
+			displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
+			return false;
+		}
+
+		return true;
+	};
+
+	// use this function to prevent cross site scripting and db injections
+	// laravel framework already provides protection against this on the backend
+	const escapeForm = (item, index, arr) => {
+		arr[index] = encodeURI(item);
+	};
+
+	const displayErrorMessage = (msg) => {
+		let eMessage = "Please provide a valid '"+msg+"' value. ";
+		alert(eMessage);
 	};
 
 	// the user submitted a delete request to the db

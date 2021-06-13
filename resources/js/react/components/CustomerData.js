@@ -33,32 +33,56 @@ const CustomerData = (props) => {
 	};
 
 	const handleSubmitForm = (el) => {
-		let userID = props.appState.dataid;
-		let customerID = props.customer.id;
-		let thisUrl = props.appState.apiUrl+"users/"+userID+"/customers/"+customerID+"/customernotes";
-		let thisMethod = "POST";
+		if(validateForm()){
+			let userID = props.appState.dataid;
+			let customerID = props.customer.id;
+			let thisUrl = props.appState.apiUrl+"users/"+userID+"/customers/"+customerID+"/customernotes";
+			let thisMethod = "POST";
 
-		// make connection
-		fetch(thisUrl, {
-			"method": thisMethod,
-			"headers": {
-				"Authorization": "Bearer "+props.appState.apiKey,
-				"Content-Type": "application/json",
-				"Accept": "application/json",
-				"Referer": location.origin,
-			},
-			"body": JSON.stringify(formData),
-		})
-		.then(response => response.json())
-		.then(response => {
-			props.appState.handleNoteUpdate(response);
-			resetEditorForm();
-		})
-		.catch(err => {
-			console.log(err);
-		});
+			// make connection
+			fetch(thisUrl, {
+				"method": thisMethod,
+				"headers": {
+					"Authorization": "Bearer "+props.appState.apiKey,
+					"Content-Type": "application/json",
+					"Accept": "application/json",
+					"Referer": location.origin,
+				},
+				"body": JSON.stringify(formData),
+			})
+			.then(response => response.json())
+			.then(response => {
+				props.appState.handleNoteUpdate(response);
+				resetEditorForm();
+			})
+			.catch(err => {
+				console.log(err);
+			});
 
-		$('#'+modalData.modal_id).modal('hide');
+			$('#'+modalData.modal_id).modal('hide');
+		}
+	};
+
+	// add any required form validations here
+	const validateForm = () => {
+		// validate the customer_note form field
+		if((typeof formData['customer_note'] === 'undefined') || (formData['customer_note'].length < 5)){
+			displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
+			return false;
+		}
+
+		return true;
+	};
+
+	// use this function to prevent cross site scripting and db injections
+	// laravel framework already provides protection against this on the backend
+	const escapeForm = (item, index, arr) => {
+		arr[index] = encodeURI(item);
+	};
+
+	const displayErrorMessage = (msg) => {
+		let eMessage = "Please provide a valid '"+msg+"' value. ";
+		alert(eMessage);
 	};
 
 	const [modalData, setModalData] = useState({

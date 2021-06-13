@@ -4315,29 +4315,53 @@ var CustomerData = function CustomerData(props) {
   };
 
   var handleSubmitForm = function handleSubmitForm(el) {
-    var userID = props.appState.dataid;
-    var customerID = props.customer.id;
-    var thisUrl = props.appState.apiUrl + "users/" + userID + "/customers/" + customerID + "/customernotes";
-    var thisMethod = "POST"; // make connection
+    if (validateForm()) {
+      var userID = props.appState.dataid;
+      var customerID = props.customer.id;
+      var thisUrl = props.appState.apiUrl + "users/" + userID + "/customers/" + customerID + "/customernotes";
+      var thisMethod = "POST"; // make connection
 
-    fetch(thisUrl, {
-      "method": thisMethod,
-      "headers": {
-        "Authorization": "Bearer " + props.appState.apiKey,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Referer": location.origin
-      },
-      "body": JSON.stringify(formData)
-    }).then(function (response) {
-      return response.json();
-    }).then(function (response) {
-      props.appState.handleNoteUpdate(response);
-      resetEditorForm();
-    })["catch"](function (err) {
-      console.log(err);
-    });
-    $('#' + modalData.modal_id).modal('hide');
+      fetch(thisUrl, {
+        "method": thisMethod,
+        "headers": {
+          "Authorization": "Bearer " + props.appState.apiKey,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Referer": location.origin
+        },
+        "body": JSON.stringify(formData)
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        props.appState.handleNoteUpdate(response);
+        resetEditorForm();
+      })["catch"](function (err) {
+        console.log(err);
+      });
+      $('#' + modalData.modal_id).modal('hide');
+    }
+  }; // add any required form validations here
+
+
+  var validateForm = function validateForm() {
+    // validate the customer_note form field
+    if (typeof formData['customer_note'] === 'undefined' || formData['customer_note'].length < 5) {
+      displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
+      return false;
+    }
+
+    return true;
+  }; // use this function to prevent cross site scripting and db injections
+  // laravel framework already provides protection against this on the backend
+
+
+  var escapeForm = function escapeForm(item, index, arr) {
+    arr[index] = encodeURI(item);
+  };
+
+  var displayErrorMessage = function displayErrorMessage(msg) {
+    var eMessage = "Please provide a valid '" + msg + "' value. ";
+    alert(eMessage);
   };
 
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -4489,26 +4513,50 @@ var CustomerNoteData = function CustomerNoteData(props) {
 
 
   var handleSubmitForm = function handleSubmitForm(el) {
-    var thisUrl = props.appState.apiUrl + "users/" + props.appState.dataid + "/customernotes/" + props.customernote.note_id;
-    var thisMethod = "PUT"; // make connection
+    if (validateForm()) {
+      var thisUrl = props.appState.apiUrl + "users/" + props.appState.dataid + "/customernotes/" + props.customernote.note_id;
+      var thisMethod = "PUT"; // make connection
 
-    fetch(thisUrl, {
-      "method": thisMethod,
-      "headers": {
-        "Authorization": "Bearer " + props.appState.apiKey,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Referer": location.origin
-      },
-      "body": JSON.stringify(formData)
-    }).then(function (response) {
-      return response.json();
-    }).then(function (response) {
-      props.appState.handleNoteUpdate(response);
-    })["catch"](function (err) {
-      console.log(err);
-    });
-    $('#' + modalData.modal_id).modal('hide');
+      fetch(thisUrl, {
+        "method": thisMethod,
+        "headers": {
+          "Authorization": "Bearer " + props.appState.apiKey,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Referer": location.origin
+        },
+        "body": JSON.stringify(formData)
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        props.appState.handleNoteUpdate(response);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+      $('#' + modalData.modal_id).modal('hide');
+    }
+  }; // add any required form validations here
+
+
+  var validateForm = function validateForm() {
+    // validate the customer_note form field
+    if (typeof formData['customer_note'] === 'undefined' || formData['customer_note'].length < 5) {
+      displayErrorMessage('Please provide a valid \'note\' with at least five(5) characters.');
+      return false;
+    }
+
+    return true;
+  }; // use this function to prevent cross site scripting and db injections
+  // laravel framework already provides protection against this on the backend
+
+
+  var escapeForm = function escapeForm(item, index, arr) {
+    arr[index] = encodeURI(item);
+  };
+
+  var displayErrorMessage = function displayErrorMessage(msg) {
+    var eMessage = "Please provide a valid '" + msg + "' value. ";
+    alert(eMessage);
   }; // the user submitted a delete request to the db
 
 
