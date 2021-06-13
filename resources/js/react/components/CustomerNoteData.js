@@ -68,11 +68,11 @@ const CustomerNoteData = (props) => {
 		// validate the customer_note form field
 		if((typeof formData['customer_note'] === 'undefined') || (formData['customer_note'].length < 5)){
 			if(typeof formData['customer_note'] === 'undefined'){
-				displayErrorMessage('customernote', 'A change to the \'note\' value must be made before saving.');
+				displayErrorMessage('note', 'A change to the \'note\' value must be made before saving.');
 				return false;	
 			}
 			else if(formData['customer_note'].length < 5){
-				displayErrorMessage('customernote', 'A valid \'note\' must contain at least five(5) characters.');
+				displayErrorMessage('note', 'A valid \'note\' must contain at least five(5) characters.');
 				return false;	
 			}
 		}
